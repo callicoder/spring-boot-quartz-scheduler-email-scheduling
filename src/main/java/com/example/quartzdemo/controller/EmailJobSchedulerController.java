@@ -70,7 +70,8 @@ public class EmailJobSchedulerController {
 
     private Trigger buildJobTrigger(JobKey jobKey, ZonedDateTime startAt) {
         return TriggerBuilder.newTrigger()
-                .withIdentity(jobKey.getName(), jobKey.getGroup())
+                .withIdentity(jobKey.getName(), "email-triggers")
+                .withDescription("Send Email Trigger")
                 .startAt(Date.from(startAt.toInstant()))
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule().withMisfireHandlingInstructionFireNow())
                 .build();
