@@ -1,6 +1,6 @@
 # Spring Boot Quartz Scheduler Example: Building an Email Scheduling app
 
-**Complete Tutorial: ** https://www.callicoder.com/spring-boot-quartz-scheduler-email-scheduling-example/
+**Complete Tutorial:** https://www.callicoder.com/spring-boot-quartz-scheduler-email-scheduling-example/
 
 ## Requirements
 
@@ -49,7 +49,7 @@ If you're using Gmail, you need to allow the third party apps to send emails by 
 
 The project stores all the scheduled Jobs in MySQL database. You'll need to create the tables that Quartz uses to store Jobs and other job-related data. Please create Quartz specific tables by executing the `quartz_tables.sql` script located inside `src/main/resources` directory.
 
-```
+```bash
 mysql> source <PATH_TO_QUARTZ_TABLES.sql>
 ```
 
