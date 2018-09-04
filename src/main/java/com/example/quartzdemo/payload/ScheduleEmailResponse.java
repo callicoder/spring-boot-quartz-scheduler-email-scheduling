@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ScheduleEmailResponse {
     private boolean success;
     private String jobId;
+    private String jobGroup;
     private String message;
 
     public ScheduleEmailResponse(boolean success, String message) {
@@ -13,9 +14,10 @@ public class ScheduleEmailResponse {
         this.message = message;
     }
 
-    public ScheduleEmailResponse(boolean success, String jobId, String message) {
+    public ScheduleEmailResponse(boolean success, String jobId, String jobGroup, String message) {
         this.success = success;
         this.jobId = jobId;
+        this.jobGroup = jobGroup;
         this.message = message;
     }
 
@@ -33,6 +35,14 @@ public class ScheduleEmailResponse {
 
     public void setJobId(String jobId) {
         this.jobId = jobId;
+    }
+
+    public String getJobGroup() {
+        return jobGroup;
+    }
+
+    public void setJobGroup(String jobGroup) {
+        this.jobGroup = jobGroup;
     }
 
     public String getMessage() {

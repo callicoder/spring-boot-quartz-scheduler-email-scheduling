@@ -32,18 +32,16 @@ public class EmailJobSchedulerController {
             if(dateTime.isBefore(ZonedDateTime.now())) {
                 ScheduleEmailResponse scheduleEmailResponse = new ScheduleEmailResponse(false,
                         "dateTime must be after current time");
-                return ResponseEntity.badRequest()
-                        .body(scheduleEmailResponse);
+                return ResponseEntity.badRequest().body(scheduleEmailResponse);
             }
 
             JobDetail jobDetail = buildJobDetail(scheduleEmailRequest);
-            Trigger trigger = buildJobTrigger(jobDetail.getKey(), dateTime);
+            Trigger trigger = buildJobTrigger(jobDetail, dateTime);
             scheduler.scheduleJob(jobDetail, trigger);
 
             ScheduleEmailResponse scheduleEmailResponse = new ScheduleEmailResponse(true,
-                    jobDetail.getKey().getName(), "Email Scheduled Successfully!");
-            return ResponseEntity
-                    .ok(scheduleEmailResponse);
+                    jobDetail.getKey().getName(), jobDetail.getKey().getGroup(), "Email Scheduled Successfully!");
+            return ResponseEntity.ok(scheduleEmailResponse);
         } catch (SchedulerException ex) {
             logger.error("Error scheduling email", ex);
 
@@ -68,9 +66,10 @@ public class EmailJobSchedulerController {
                 .build();
     }
 
-    private Trigger buildJobTrigger(JobKey jobKey, ZonedDateTime startAt) {
+    private Trigger buildJobTrigger(JobDetail jobDetail, ZonedDateTime startAt) {
         return TriggerBuilder.newTrigger()
-                .withIdentity(jobKey.getName(), "email-triggers")
+                .forJob(jobDetail)
+                .withIdentity(jobDetail.getKey().getName(), "email-triggers")
                 .withDescription("Send Email Trigger")
                 .startAt(Date.from(startAt.toInstant()))
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule().withMisfireHandlingInstructionFireNow())

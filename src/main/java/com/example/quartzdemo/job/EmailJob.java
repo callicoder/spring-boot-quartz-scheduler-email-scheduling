@@ -18,21 +18,13 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class EmailJob extends QuartzJobBean {
-
     private static final Logger logger = LoggerFactory.getLogger(EmailJob.class);
 
+    @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
     private MailProperties mailProperties;
-
-    @Autowired
-    public void setMailSender(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
-
-    @Autowired
-    public void setMailProperties(MailProperties mailProperties) {
-        this.mailProperties = mailProperties;
-    }
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
